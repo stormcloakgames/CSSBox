@@ -18,3 +18,27 @@ CSSBox relies on the jStyleParser open source CSS parser
 
 The CSSBox library is under development and its API or functionality may change in future versions.
 See the CHANGELOG for the most important changes to the previous versions.
+
+Gradle and Jitpack support
+--------------------------
+
+This project now supports Gradle and Jitpack. After making a change, create a new release using the x.x.x format
+(See: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+
+If using in conjunction with CSSBox, you will then also need to update CSSBox's build.gradle.kts file and increment the version of jStyleParser
+with the new version number.
+
+Test Suite files
+--------------------------
+
+The CSSBox unit tests require many files to run correctly, all of which can be found at https://github.com/radkovo/CSSBoxTesting/
+
+Due to how many test files there are, importing them manually and attempting to build can crash some IDEs like Eclipse. in these cases bulding via a CLI is needed.
+
+These tests are imported and run using Github Actions, and so are not needed in this repository. To run these tests locally, create a directory called "testsuite" in the root,
+and place the "baseline" folder from the CSSBoxTesting repo inside. Your directory should look like this:
+```
+CSSBox/testsuite/baseline/nightly-unstable/html4/...
+```
+When the test files files are absent the tests will not run locally.
+
