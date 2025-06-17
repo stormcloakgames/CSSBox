@@ -2,6 +2,7 @@ CSSBox
 ======
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.sf.cssbox/cssbox/badge.png)](https://maven-badges.herokuapp.com/maven-central/net.sf.cssbox/cssbox)
+[![](https://jitpack.io/v/stormcloakgames/CSSBox.svg)](https://jitpack.io/#stormcloakgames/CSSBox)
 
 An HTML/CSS rendering engine library
 (c) 2005-2024 Radek Burget (burgetr@fit.vutbr.cz)
@@ -18,6 +19,23 @@ CSSBox relies on the jStyleParser open source CSS parser
 
 The CSSBox library is under development and its API or functionality may change in future versions.
 See the CHANGELOG for the most important changes to the previous versions.
+
+## Getting started
+```kotlin
+// add to build.gradle.kts
+repositories {
+    // ...
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    implementation("com.github.stormcloakgames:CSSBox:1.0.0") // or 'main-SNAPSHOT' for the latest build
+}
+```
+
+You can then refresh your Gradle dependencies to pick up the library.
+
+(If you're using `main-SNAPSHOT`, use `gradlew --refresh-dependencies` to force Gradle to pull the latest copy of all your dependencies.)
 
 Gradle and Jitpack support
 --------------------------
