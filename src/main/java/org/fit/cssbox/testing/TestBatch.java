@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
@@ -147,7 +148,7 @@ public class TestBatch
                             for (int ti = 0; ti < tags.getLength(); ti++)
                             {
                                 Element tag = (Element) tags.item(ti);
-                                entry.tags.add(tag.getTextContent().trim().toLowerCase());
+                                entry.tags.add(tag.getTextContent().trim().toLowerCase(Locale.ROOT));
                             }
                             
                             tests.add(entry);

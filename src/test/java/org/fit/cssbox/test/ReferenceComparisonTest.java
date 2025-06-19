@@ -22,6 +22,7 @@ package org.fit.cssbox.test;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 import org.fit.cssbox.testing.ReferenceResults;
@@ -91,4 +92,13 @@ public class ReferenceComparisonTest
         Assert.assertTrue("All results passed", errorcnt <= 5);
     }
     
+    @Test
+    public void testTurkishLocale() throws MalformedURLException
+    {
+    	Locale.setDefault(new Locale("tr", "TR"));
+    	
+    	checkForRegressions();
+    	
+    	Locale.setDefault(Locale.ROOT);
+    }
 }

@@ -19,6 +19,8 @@
  */
 package org.fit.cssbox.css;
 
+import java.util.Locale;
+
 import cz.vutbr.web.css.CSSProperty;
 import cz.vutbr.web.css.CSSProperty.FontStyle;
 import cz.vutbr.web.css.CSSProperty.FontWeight;
@@ -76,7 +78,7 @@ public class FontSpec
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((family == null) ? 0 : family.toLowerCase().hashCode());
+        result = prime * result + ((family == null) ? 0 : family.toLowerCase(Locale.ROOT).hashCode());
         result = prime * result + ((style == null) ? 0 : style.hashCode());
         result = prime * result + ((weight == null) ? 0 : weight.hashCode());
         return result;
@@ -93,7 +95,7 @@ public class FontSpec
         {
             if (other.family != null) return false;
         }
-        else if (!family.toLowerCase().equals(other.family.toLowerCase())) return false;
+        else if (!family.toLowerCase(Locale.ROOT).equals(other.family.toLowerCase(Locale.ROOT))) return false;
         if (style != other.style) return false;
         if (weight != other.weight) return false;
         return true;

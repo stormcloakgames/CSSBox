@@ -21,6 +21,7 @@
 package org.fit.cssbox.layout;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.w3c.dom.Text;
@@ -303,9 +304,9 @@ public class TextBox extends Box implements Inline
         switch (transform)
         {
             case LOWERCASE:
-                return src.toLowerCase();
+                return src.toLowerCase(Locale.ROOT);
             case UPPERCASE:
-                return src.toUpperCase();
+                return src.toUpperCase(Locale.ROOT);
             case CAPITALIZE:
                 StringBuilder ret = new StringBuilder(src.length());
                 boolean ws = true;
