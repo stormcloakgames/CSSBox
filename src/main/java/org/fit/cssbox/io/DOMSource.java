@@ -21,6 +21,7 @@
 package org.fit.cssbox.io;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -55,7 +56,7 @@ public abstract class DOMSource
     {
         if (type != null)
         {
-            String t = type.toLowerCase();
+            String t = type.toLowerCase(Locale.ROOT);
 
             //extract the charset if specified
             int strt = t.indexOf("charset=");

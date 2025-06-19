@@ -20,6 +20,7 @@
 
 package org.fit.cssbox.css;
 
+import java.util.Locale;
 import java.util.Vector;
 
 import cz.vutbr.web.css.CSSFactory;
@@ -64,7 +65,7 @@ public class HTMLNorm
         if (n.getNodeType() == Node.ELEMENT_NODE)
         {
             final Element el = (Element) n;
-            final String tagname = el.getTagName().toLowerCase();
+            final String tagname = el.getTagName().toLowerCase(Locale.ROOT);
             //Analyze HTML attributes
             String attrs = "";
             //background
@@ -124,9 +125,9 @@ public class HTMLNorm
                     }
                 }
                 if (el.getAttributes().getNamedItem("frame") != null)
-                    frame = el.getAttribute("frame").toLowerCase();
+                    frame = el.getAttribute("frame").toLowerCase(Locale.ROOT);
                 if (el.getAttributes().getNamedItem("rules") != null)
-                    rules = el.getAttribute("rules").toLowerCase();
+                    rules = el.getAttribute("rules").toLowerCase(Locale.ROOT);
                 
                 if (!border.equals("0"))
                 {
@@ -323,7 +324,7 @@ public class HTMLNorm
      */
     public static float computeAttributeLength(String value, float whole) throws NumberFormatException
     {
-        String sval = value.trim().toLowerCase();
+        String sval = value.trim().toLowerCase(Locale.ROOT);
         if (sval.endsWith("%"))
         {
             float val = Float.parseFloat(sval.substring(0, sval.length() - 1));

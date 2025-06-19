@@ -19,6 +19,8 @@
  */
 package org.fit.cssbox.layout;
 
+import java.util.Locale;
+
 import org.w3c.dom.Element;
 
 import cz.vutbr.web.css.CSSProperty;
@@ -195,7 +197,7 @@ public class ListItemBox extends BlockBox
                     text = binaryToRoman(itemNumber);
                     break;
                 case LOWER_ROMAN:
-                    text = binaryToRoman(itemNumber).toLowerCase();
+                    text = binaryToRoman(itemNumber).toLowerCase(Locale.ROOT);
                     break;
                 default:
                     text = String.valueOf(itemNumber); // default decimal

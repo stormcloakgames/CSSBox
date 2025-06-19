@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-	implementation("com.github.stormcloakgames:jStyleParser:1.0.0")
+	implementation("com.github.stormcloakgames:jStyleParser:1.0.1")
     implementation(libs.org.htmlunit.neko.htmlunit)
     implementation(libs.org.slf4j.slf4j.api)
     testImplementation(libs.junit.junit)

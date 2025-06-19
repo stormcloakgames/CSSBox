@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import cz.vutbr.web.css.NodeData;
@@ -70,12 +71,12 @@ public class HTMLBoxFactory
      */
     public boolean isTagSupported(Element e)
     {
-        if (e.getNodeName() != null && supported.contains(e.getNodeName().toLowerCase())) //completely supported tags
+        if (e.getNodeName() != null && supported.contains(e.getNodeName().toLowerCase(Locale.ROOT))) //completely supported tags
             return true;
         else //special cases
         {
             //empty anchor elements must be preserved
-            if (e.getNodeName().toLowerCase().equals("a") && e.hasAttribute("name") 
+            if (e.getNodeName().toLowerCase(Locale.ROOT).equals("a") && e.hasAttribute("name") 
                     && (e.getTextContent() == null || e.getTextContent().trim().length() == 0))
                 return true;
             else
@@ -94,7 +95,7 @@ public class HTMLBoxFactory
      */
     public ElementBox createBox(ElementBox parent, Element e, Viewport viewport, NodeData style)
     {
-        String name = e.getNodeName().toLowerCase();
+        String name = e.getNodeName().toLowerCase(Locale.ROOT);
         if (name.equals("object"))
             return createSubtreeObject(parent, e, viewport, style);
         else if (name.equals("img"))
@@ -163,7 +164,7 @@ public class HTMLBoxFactory
         //try to create the content object based on the mime type
         try
         {
-            String mime = HTMLNorm.getAttribute(e, "type").toLowerCase();
+            String mime = HTMLNorm.getAttribute(e, "type").toLowerCase(Locale.ROOT);
             String cb = HTMLNorm.getAttribute(e, "codebase");
             String dataurl = URLDecoder.decode(HTMLNorm.getAttribute(e, "data"), "UTF-8");
             URL base = new URL(factory.getBaseURL(), cb);

@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.fit.cssbox.css.CSSUnits;
@@ -281,7 +282,7 @@ public class GraphicsVisualContext extends VisualContext
         {
             for (int i = 0; i < avail.length; i++)
             {
-                if (avail[i].toLowerCase().contains("sans") || avail[i].toLowerCase().contains("serif"))
+                if (avail[i].toLowerCase(Locale.ROOT).contains("sans") || avail[i].toLowerCase(Locale.ROOT).contains("serif"))
                 {
                     ret = avail[i];
                     break;

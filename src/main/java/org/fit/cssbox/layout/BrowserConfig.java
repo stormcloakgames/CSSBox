@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.fit.cssbox.io.ContentObserver;
@@ -359,7 +360,7 @@ public class BrowserConfig
      */
     public void setLogicalFont(String logical, List<String> physical)
     {
-        logicalFonts.put(logical.toLowerCase(), physical);
+        logicalFonts.put(logical.toLowerCase(Locale.ROOT), physical);
     }
     
     /**
@@ -369,7 +370,7 @@ public class BrowserConfig
      */
     public List<String> getLogicalFont(String logical)
     {
-        List<String> ret = logicalFonts.get(logical.toLowerCase());
+        List<String> ret = logicalFonts.get(logical.toLowerCase(Locale.ROOT));
         if (ret == null)
             ret = Collections.emptyList();
         return ret;
