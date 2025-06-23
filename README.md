@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.stormcloakgames:CSSBox:1.0.0") // or 'main-SNAPSHOT' for the latest build
+    implementation("com.github.stormcloakgames:CSSBox:5.1.0") // or 'main-SNAPSHOT' for the latest build
 }
 ```
 
