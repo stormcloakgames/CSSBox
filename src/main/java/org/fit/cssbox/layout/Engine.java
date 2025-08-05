@@ -205,25 +205,43 @@ public abstract class Engine
             decoder.recomputeStyles();
         }
         
-        log.trace("Creating boxes");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Creating boxes");
+        }
         BoxFactory factory = new BoxFactory(decoder, baseurl);
         factory.setConfig(config);
         factory.reset();
         VisualContext ctx = createVisualContext(config, decoder.getFontTable());
         viewport = factory.createViewportTree(root, ctx, dim.width, dim.height);
-        log.trace("We have " + factory.next_order + " boxes");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("We have " + factory.next_order + " boxes");
+        }
         viewport.setVisibleRect(new Rectangle(visibleRect.x, visibleRect.y, visibleRect.width, visibleRect.height));
         viewport.initSubtree();
         
-        log.trace("Layout for "+dim.width+"px");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Layout for "+dim.width+"px");
+        }
         viewport.doLayout(dim.width, true, true);
-        log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
-
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
+        }
+        
         if (autoSizeUpdate)
         {
-            log.trace("Updating viewport size");
+        	if (log.isTraceEnabled())
+            {
+        		log.trace("Updating viewport size");
+            }
             viewport.updateBounds(new Dimension(dim.width, dim.height));
-            log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
+            if (log.isTraceEnabled())
+            {
+            	log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
+            }
         }
         
         if (viewport.getWidth() > dim.width || viewport.getHeight() > dim.height)
@@ -231,12 +249,18 @@ public abstract class Engine
             initOutputMedia(Math.max(viewport.getWidth(), dim.width), Math.max(viewport.getHeight(), dim.height));
         }
         
-        log.trace("Positioning for "+viewport.getWidth()+"x"+viewport.getHeight()+"px");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Positioning for "+viewport.getWidth()+"x"+viewport.getHeight()+"px");
+        }
         viewport.absolutePositions();
         
         if (performRendering)
         {
-            log.trace("Drawing");
+        	if (log.isTraceEnabled())
+            {
+        		log.trace("Drawing");
+            }
             renderViewport(viewport);
         }
     }

@@ -158,19 +158,34 @@ public class ReplacedText extends ReplacedContent
         VisualContext ctx = getOwner().getVisualContext().create();
         ctx.setParentContext(ctx); //ctx is the root context for the nested text
         
-        log.trace("Creating boxes");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Creating boxes");
+        }
         BoxFactory factory = new BoxFactory(decoder, base);
         factory.setConfig(owner.getViewport().getConfig());
         factory.reset();
         viewport = factory.createViewportTree(decoder.getRoot(), ctx, dim.width, dim.height);
-        log.trace("We have " + factory.next_order + " boxes");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("We have " + factory.next_order + " boxes");
+        }
         viewport.initSubtree();
         
-        log.trace("Layout for "+dim.width+"px");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Layout for "+dim.width+"px");
+        }
         viewport.doLayout(dim.width, true, true);
-        log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Resulting size: " + viewport.getWidth() + "x" + viewport.getHeight() + " (" + viewport + ")");
+        }
 
-        log.trace("Positioning for "+viewport.getWidth()+"x"+viewport.getHeight()+"px");
+        if (log.isTraceEnabled())
+        {
+        	log.trace("Positioning for "+viewport.getWidth()+"x"+viewport.getHeight()+"px");
+        }
         viewport.absolutePositions();
     }
     
