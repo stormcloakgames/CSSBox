@@ -265,7 +265,7 @@ public class TextBox extends Box implements Inline
      */
     private String collapseWhitespaces(String src)
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         boolean inws = false;
         for (int i = 0; i < src.length(); i++)
         {
