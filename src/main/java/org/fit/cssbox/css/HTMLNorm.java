@@ -20,8 +20,8 @@
 
 package org.fit.cssbox.css;
 
+import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Vector;
 
 import cz.vutbr.web.css.CSSFactory;
 import cz.vutbr.web.css.TermLength;
@@ -395,7 +395,7 @@ public class HTMLNorm
         NodeList tables = doc.getElementsByTagName("table");
         for (int i = 0; i < tables.getLength(); i++)
         {
-            Vector<Node> nodes = new Vector<Node>();
+        	ArrayList<Node> nodes = new ArrayList<Node>();
             recursiveFindBadNodesInTable(tables.item(i), null, nodes);
             for (Node n : nodes)
             {
@@ -410,7 +410,7 @@ public class HTMLNorm
      * @param cellroot last cell root
      * @param nodes resulting list of nodes
      */
-    private static void recursiveFindBadNodesInTable(Node n, Node cellroot, Vector<Node> nodes)
+    private static void recursiveFindBadNodesInTable(Node n, Node cellroot, ArrayList<Node> nodes)
     {
         Node cell = cellroot;
         

@@ -19,8 +19,8 @@
  */
 package org.fit.cssbox.layout;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 
 import org.fit.cssbox.css.HTMLNorm;
 import org.w3c.dom.Element;
@@ -45,8 +45,8 @@ public class TableBox extends BlockBox
 	
     protected TableBodyBox header;
     protected TableBodyBox footer;
-    protected Vector<TableBodyBox> bodies;
-    protected Vector<TableColumn> columns;
+    protected ArrayList<TableBodyBox> bodies;
+    protected ArrayList<TableColumn> columns;
     
     /** total number of columns in the table */
     protected int columnCount;
@@ -361,7 +361,7 @@ public class TableBox extends BlockBox
     {
         for (int i = 0; i < columns.size(); i++)
             if (i < body.getColumnCount())
-                body.updateColumn(i, columns.elementAt(i));
+                body.updateColumn(i, columns.get(i));
     }
     
     /**
@@ -552,7 +552,7 @@ public class TableBox extends BlockBox
             float remaincols = columns.size();
             for (int i = columns.size() - 1; i >= 0; i--)
             {
-                TableColumn col = columns.elementAt(i); 
+                TableColumn col = columns.get(i); 
                 float addw = remain / remaincols;
                 col.setColumnWidth(col.getWidth() + addw);
                 remain -= addw;
@@ -573,7 +573,7 @@ public class TableBox extends BlockBox
                 
                 for (int i = columns.size() - 1; i >= 0 && totaldif > 0; i--)
                 {
-                    TableColumn col = columns.elementAt(i);
+                    TableColumn col = columns.get(i);
                     if (!col.wset)
                     {
                         float dif = col.getWidth() - col.getMinimalWidth();
@@ -596,7 +596,7 @@ public class TableBox extends BlockBox
                 
                 for (int i = columns.size() - 1; i >= 0 && totaldif > 0; i--)
                 {
-                    TableColumn col = columns.elementAt(i);
+                    TableColumn col = columns.get(i);
                     if (col.wset && !col.wrelative)
                     {
                         float dif = col.getWidth() - col.getMinimalWidth();
@@ -619,7 +619,7 @@ public class TableBox extends BlockBox
                 
                 for (int i = columns.size() - 1; i >= 0 && totaldif > 0; i--)
                 {
-                    TableColumn col = columns.elementAt(i);
+                    TableColumn col = columns.get(i);
                     if (col.wrelative)
                     {
                         float dif = col.getWidth() - col.getMinimalWidth();
@@ -677,8 +677,8 @@ public class TableBox extends BlockBox
      */
     private void organizeContent()
     {
-        bodies = new Vector<TableBodyBox>();
-        columns = new Vector<TableColumn>();
+        bodies = new ArrayList<TableBodyBox>();
+        columns = new ArrayList<TableColumn>();
         anonbody = null;
         for (Iterator<Box> it = nested.iterator(); it.hasNext(); )
         {

@@ -20,10 +20,10 @@
 
 package org.fit.cssbox.layout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import cz.vutbr.web.css.CSSProperty;
 import cz.vutbr.web.css.CSSProperty.ZIndex;
@@ -102,7 +102,7 @@ abstract public class ElementBox extends Box
     protected Box preadd;
     
     /** Other boxes to be added to the tree after this one. Used during the box tree creation only. */
-    protected Vector<Box> postadd;
+    protected ArrayList<Box> postadd;
     
     /** Current DOM child during the tree creation */
     protected BoxTreeCreationStatus curstat;
@@ -192,7 +192,7 @@ abstract public class ElementBox extends Box
     /** A list of nested boxes (possibly empty). The box can contain either 
      * only block boxes or only inline boxes. The inline boxes can only
      * contain inline boxes */
-    protected Vector<Box> nested;
+    protected ArrayList<Box> nested;
     
     /** Corresponding stacking context if this box creates one. */
     protected StackingContext scontext;
@@ -219,7 +219,7 @@ abstract public class ElementBox extends Box
 	        previousTwin = null;
 	        nextTwin = null;
 	        
-	        nested = new Vector<Box>();
+	        nested = new ArrayList<Box>();
 	        pseudoElements = new HashMap<>();
 	        startChild = 0;
 	        endChild = 0;
@@ -511,7 +511,7 @@ abstract public class ElementBox extends Box
      */
     public Box getSubBox(int index)
     {
-        return nested.elementAt(index);
+        return nested.get(index);
     }
     
     /**
@@ -561,7 +561,7 @@ abstract public class ElementBox extends Box
      */
     public void removeAllSubBoxes()
     {
-        nested.removeAllElements();
+        nested.clear();
         endChild = 0;
     }
     
@@ -573,7 +573,7 @@ abstract public class ElementBox extends Box
     public void insertSubBoxBefore(Box where, Box what)
     {
         int pos = nested.indexOf(where);
-        nested.insertElementAt(what, pos);
+        nested.add(pos, what);
         endChild++;
     }
 
@@ -585,7 +585,7 @@ abstract public class ElementBox extends Box
     public void insertSubBoxAfter(Box where, Box what)
     {
         int pos = nested.indexOf(where);
-        nested.insertElementAt(what, pos+1);
+        nested.add(pos+1, what);
         endChild++;
     }
 
@@ -596,7 +596,7 @@ abstract public class ElementBox extends Box
      */
     public void insertSubBox(int index, Box what)
     {
-        nested.insertElementAt(what, index);
+        nested.add(index, what);
         endChild++;
     }
     
@@ -784,7 +784,7 @@ abstract public class ElementBox extends Box
     public void adoptChildren()
     {
         for (int i = startChild; i < endChild; i++)
-            nested.elementAt(i).setParent(this);
+            nested.get(i).setParent(this);
     }
     
     //=======================================================================
@@ -1079,7 +1079,7 @@ abstract public class ElementBox extends Box
      */
     protected void drawChildContexts(int zindex)
     {
-        Vector<ElementBox> list = getStackingContext().getElementsForZIndex(zindex);
+    	ArrayList<ElementBox> list = getStackingContext().getElementsForZIndex(zindex);
         if (list != null)
         {
             for (ElementBox elem : list)

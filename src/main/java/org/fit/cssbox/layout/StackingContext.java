@@ -19,17 +19,17 @@
  */
 package org.fit.cssbox.layout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * A stacking context. It gathers the information about child stacking contexts and their z-indices.
  * 
  * @author burgetr
  */
-public class StackingContext extends HashMap<Integer, Vector<ElementBox>> 
+public class StackingContext extends HashMap<Integer, ArrayList<ElementBox>> 
 {
     private static final long serialVersionUID = -2945581861967274084L;
 
@@ -56,7 +56,7 @@ public class StackingContext extends HashMap<Integer, Vector<ElementBox>>
         return clevels;
     }
     
-    public Vector<ElementBox> getElementsForZIndex(int zindex)
+    public ArrayList<ElementBox> getElementsForZIndex(int zindex)
     {
         return get(zindex);
     }
@@ -64,10 +64,10 @@ public class StackingContext extends HashMap<Integer, Vector<ElementBox>>
     public void registerChildContext(ElementBox element)
     {
         int zindex = element.hasZIndex() ? element.getZIndex() : 0; //put 'auto' z-indices into level 0
-        Vector<ElementBox> list = get(zindex);
+        ArrayList<ElementBox> list = get(zindex);
         if (list == null)
         {
-            list = new Vector<ElementBox>();
+            list = new ArrayList<ElementBox>();
             put(zindex, list);
         }
         list.add(element);

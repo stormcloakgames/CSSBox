@@ -356,7 +356,7 @@ public class InlineBox extends ElementBox implements InlineElement
                     rbox.splitted = true;
                     rbox.splitid = splitid + 1;
                     rbox.setStartChild(i); //next starts with me...
-                    rbox.nested.setElementAt(subbox.getRest(), i); //..but only with the rest
+                    rbox.nested.set(i, subbox.getRest()); //..but only with the rest
                     rbox.adoptChildren();
                     setEndChild(i+1); //...and this box stops with this element
                     rest = rbox;

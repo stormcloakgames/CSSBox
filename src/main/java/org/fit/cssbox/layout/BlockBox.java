@@ -20,9 +20,9 @@
 
 package org.fit.cssbox.layout;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import cz.vutbr.web.css.CSSProperty;
 import cz.vutbr.web.css.CSSProperty.Clip;
@@ -866,7 +866,7 @@ public class BlockBox extends ElementBox
         x += indent;
         
         //line boxes
-        Vector<LineBox> lines = new Vector<LineBox>();
+        ArrayList<LineBox> lines = new ArrayList<LineBox>();
         LineBox curline = firstLine;
         if (curline == null)
             curline = new LineBox(this, 0, 0);
