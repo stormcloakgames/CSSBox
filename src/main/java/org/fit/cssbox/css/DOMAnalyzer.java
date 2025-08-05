@@ -753,4 +753,13 @@ public class DOMAnalyzer
     	else
     		return StyleSheet.Origin.USER;
     }
+    
+    /**
+     * Transfers all styles from another DOMAnaluzer instance,
+     * in order to save on compute time for repeated CSS use.
+     */
+    public void ReuseCSS(DOMAnalyzer da)
+    {
+    	this.styles = da.styles;
+    }
 }

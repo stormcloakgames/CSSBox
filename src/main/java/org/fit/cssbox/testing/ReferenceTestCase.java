@@ -252,5 +252,82 @@ public class ReferenceTestCase implements Callable<Float>
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Runs the test and returns the result. Uses the ReuseCSS function.
+     * @return The resulting failure rate (0.0 means passed, >0.0 means fail)
+     * @throws IOException
+     * @throws SAXException
+     */
+    public float performCSSReuseTest() throws IOException, SAXException
+    {
+        log.debug("Loading test {}", urlstring);
+        Document doc = loadDocument(urlstring);
+        URL srcurl = docSource.getURL();
+        URL refurl = extractReference(doc, docSource.getURL());
+        BufferedImage testImg = renderDocumentWithReusedCSS(doc);
+        closeDocument();
+        
+        log.debug("  -- reference result {}", refurl);
+        Document refDoc = loadDocument(refurl.toString());
+        BufferedImage refImg = renderDocument(refDoc);
+        closeDocument();
+        
+        ImageComparator ic = new ImageComparator(testImg, refImg);
+        log.debug(" -- error rate {}", ic.getErrorRate());
+        if (saveImages && ic.getErrorRate() > 0.0f)
+        {
+            File path = new File(srcurl.getFile());
+            saveImage(testImg, "/tmp/test-" + path.getName() + ".srcA.png");
+            saveImage(refImg, "/tmp/test-" + path.getName() + ".srcB.png");
+            saveImage(ic.getDifferenceImage(), "/tmp/test-" + path.getName() + ".diff.png");
+        }
+        if (ic.getErrorDescription() != null)
+            log.error(name + ": " + ic.getErrorDescription());
+        
+        if (batch != null)
+            batch.reportCompletion(this);
+        
+        return ic.getErrorRate();
+    }
+    
+    private BufferedImage renderDocumentWithReusedCSS(Document doc)
+    {
+        //create the media specification
+        MediaSpec media = new MediaSpec(mediaType);
+        media.setDimensions(windowSize.width, windowSize.height);
+        media.setDeviceDimensions(windowSize.width, windowSize.height);
+
+        //Create the CSS analyzer
+        DOMAnalyzer da_style = new DOMAnalyzer(doc, docSource.getURL());
+        da_style.setMediaSpec(media);
+        da_style.attributesToStyles(); //convert the HTML presentation attributes to inline styles
+        da_style.addStyleSheet(null, CSSNorm.stdStyleSheet(), DOMAnalyzer.Origin.AGENT); //use the standard style sheet
+        da_style.addStyleSheet(null, CSSNorm.userStyleSheet(), DOMAnalyzer.Origin.AGENT); //use the additional style sheet
+        da_style.addStyleSheet(null, CSSNorm.formsStyleSheet(), DOMAnalyzer.Origin.AGENT); //render form fields using css
+        da_style.getStyleSheets(); //load the author style sheets
+        
+        DOMAnalyzer da = new DOMAnalyzer(doc, docSource.getURL());
+        da.ReuseCSS(da_style);
+        
+        GraphicsEngine engine = new GraphicsEngine(da.getRoot(), da, docSource.getURL()) {
+            @Override
+            protected void setupGraphics(Graphics2D g)
+            {
+                // disable antialiasing for testing in order to compare the resulting images more precisely
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+            }
+        };
+        engine.setUseKerning(false);
+        engine.setAutoMediaUpdate(false); //we have a correct media specification, do not update
+        engine.getConfig().setClipViewport(cropWindow);
+        engine.getConfig().setLoadImages(loadImages);
+        engine.getConfig().setLoadBackgroundImages(loadBackgroundImages);
+
+        engine.createLayout(windowSize);
+        return engine.getImage();
+    }
 
 }

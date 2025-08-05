@@ -101,4 +101,58 @@ public class ReferenceComparisonTest
     	
     	Locale.setDefault(Locale.ROOT);
     }
+    
+    @Test
+    public void testCSSReuse() throws MalformedURLException
+    {
+        ReferenceResults ref = new ReferenceResults();
+        
+        String url_string = "file:";
+        if(System.getProperty("user.dir").charAt(0) != '/')
+        {
+        	url_string += "/";
+        }
+        url_string += System.getProperty("user.dir") + "/testsuite/baseline/nightly-unstable/html4/";
+        URL url = new URL(url_string);
+        TestBatch tester = new TestBatch(url, THREADS);
+        
+        int errorcnt = 0;
+        if (tester.getTestCount() > 0)
+        {
+            ArrayList<String> refNames = new ArrayList<String>(); 
+            for (Map.Entry<String, Float> item : ref.entrySet())
+            {
+                if (item.getValue() <= ReferenceResults.SUCCESS_THRESHOLD)
+                    refNames.add(item.getKey());
+            }
+            
+            tester.runCSSReuseTests(refNames);
+            Map<String, Float> results = tester.getResults();
+            for (Map.Entry<String, Float> item : results.entrySet())
+            {
+                String name = item.getKey();
+                float val = item.getValue();
+                float refval = ref.get(name);
+                if (val < 0.0f)
+                {
+                    System.err.println(name + " : execution failed");
+                    errorcnt++;
+                }
+                if (val - refval > ReferenceResults.COMPARISON_THRESHOLD)
+                {
+                    System.err.println(name + " : regression found (" + val + " > " + refval + ")");
+                    if (refval == 0.0f)
+                    {
+                        errorcnt++; //count as error when the original rate was 0.0 (a broken test)
+                        System.err.println("  (broken test)");
+                    }
+                    else
+                        System.err.println("  (but the original value was not 0.0 neither)");
+                }
+            }
+        }
+        else
+            System.err.println("No tests found, giving up testing.");
+        Assert.assertTrue("All results passed", errorcnt <= 5);
+    }
 }
